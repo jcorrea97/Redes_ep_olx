@@ -87,11 +87,8 @@
     <script type= "text/javascript">
         
         var socket = io('http://localhost:3000');
-        var todosProdutos;
-
-
+        
        function fillProduto(produto) {
-            todosProdutos = produto;
             $('.valor').append('<div class="col">Valor: <span >'+ produto.valorProduto+'</span></div>');
             $('.Nomeproduto').append('<div class="col"> <h4 >'+ produto.nomeProduto+'</h4></div>');
             $('.Urlproduto').append(' <input class="form-control"  value="'+produto.urlProduto+'" /></div>');
