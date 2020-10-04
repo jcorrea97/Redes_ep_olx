@@ -1,6 +1,6 @@
 # Redes_ep_olx
 
-1- git clone reposiroty
+1- git clone repository
 
 2- npm install
 
