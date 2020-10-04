@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>olx</title>
+
+    <script> src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
+    <script> src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"</script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+<style>
+    .logo-container {
+        background-color: #47bcff;
+        color: #FFF;
+    }
+    .logo {
+        font-family: 'Handlee', cursive;
+        font-size: 2.5rem;
+    }
+</style>
+
+</head>
+<body>	
+    <body>
+
+        <div  class="jumbotron mb-0 ">
+            <h1 class="display-4" >Insira um novo produto</h1>
+        </div>
+
+		<div class="container">
+	
+			<div class="card mt-3">
+				<form id="sendnovoproduto" class="card-body"  >
+					<div class="form-group">
+						<label for="nomeProduto">Produto</label>
+						<input  name= "nomeProduto" class="form-control" placeholder="nome do produto"/>
+						<small>Informa qual o nome do produto.</small>
+						
+					</div>
+					<div class="form-group">
+						<label for="urlProduto">Url</label>
+						<input name= "urlProduto" class="form-control" placeholder="url do produto"/>
+						<small>Procure em um site o produto que você deseja e cole a url da página aqui.</small>
+						
+					</div>
+					<div class="form-group">
+						<label for="urlImagem">Imagem</label>
+						<input name= "urlImagem" class="form-control" placeholder="url da imagem"/>
+						<small>Copie a url de uma boa imagem do produto e cole aqui para ajudar a conseguir compradores.</small>
+					
+                    </div>
+                    
+                    <div class="form-group">
+						<label for="valorProduto">Valor</label>
+						<input name= "valorProduto" class="form-control" placeholder="100,00"/>
+						<small>valor do produto</small>
+					
+                    </div>
+                    
+					<div class="form-group">
+						<label for="descricao">Descrição</label>
+						<textarea name="descricao" class="form-control" placeholder="Adicione detalhes importantes para ajudar o comprador."></textarea>
+                    </div>
+                    <a><button id = "botaocadastro" class="btn btn-primary" type="submit">Cadastrar</button></a>
+                </form>
+			</div>
+        </div>
+        
+        <script type= "text/javascript">
+            var socket = io('http://localhost:3000');
+    
+
+            $('#sendnovoproduto').submit(function(event) {
+                event.preventDefault();
+                var nomeProduto= $('input[name=nomeProduto]').val();
+                var urlProduto = $('input[name=urlProduto]').val();
+                var urlImagem = $('input[name=urlImagem]').val();
+                var valorProduto = $('input[name=valorProduto]').val();
+                var descricao = $('textarea[name=descricao]').val();
+    
+                    var produtoObject = {
+                        nomeProduto: nomeProduto,
+                        urlProduto: urlProduto,
+                        urlImagem: urlImagem,
+                        valorProduto: valorProduto,
+                        descricao: descricao
+                    };
+    
+                if(!nomeProduto.length){
+                    alert("insira um produto valido");
+                } else {
+                    alert("produto cadastrado");
+                    socket.emit('sendProduto', produtoObject );
+                    goToHome();
+                }
+    
+            });
+
+            function goToHome(produto) {
+                const url = 'http://localhost:3000';
+                $(location).attr('href',url);
+        }
+    
+    
+        </script>
+	</body>
+    
+</body>
+</html>
+
