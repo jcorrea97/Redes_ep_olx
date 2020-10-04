@@ -12,6 +12,7 @@
     <script> src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"</script>
     <script src="/socket.io/socket.io.js"></script>
 
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
@@ -29,33 +30,35 @@
 </head>
 <body>	
     <div  class="jumbotron mb-0 mt-4">
-        <h1 class="display-4" >olx</h1>
+        <h1 class="display-4" >OLX</h1>
     </div>
 
-    <div class="container"></div>
-    
-        <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link" href="/#">Todos</a>
-                <a class="nav-item nav-link" href="/#">Aguardando</a>
-                <a  class="nav-item nav-link" href="/#">Aprovado</a>
-                <a  class="nav-item nav-link" href="/#">Entregue</a>
-            </div>
-            <a href="http://localhost:3000/novoproduto"><button class="btn btn-outline-secondary my-2 my-sm-0">Novo produto</button></a>
-            <a href="http://localhost:3000/chat"><button class="btn btn-outline-secondary my-2 my-sm-0">chat</button></a>
-        </nav>
+    <div class="container"> </div>
+    <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3" id="top-menu">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="/#">Todos</a>
+            <a class="nav-item nav-link" href="/#">Aguardando</a>
+            <a class="nav-item nav-link" href="/#">Aprovado</a>
+            <a class="nav-item nav-link" href="/#">Entregue</a>
+        </div>
+        <a href="http://localhost:3000/novoproduto"><button class="btn btn-outline-secondary my-2 my-sm-0 newproduct">Novo produto</button></a>
+        <a href="http://localhost:3000/chat"><button class="btn btn-outline-secondary my-2 my-sm-0">chat</button></a>
+    </nav>
+    <nav class="navbar navbar-light">
+        <form class="form-inline" id="searchbar">
+            <input class="form-control mr-sm-2" id="searchinput" type="search" placeholder="Buscar produto" aria-label="Search">
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
+    </nav>
 
-    <div class="gambeta">
-        
-    </div>
+    <div class="gambeta"> </div>
     
-
-     <script type= "text/javascript">
-        
+    <script type= "text/javascript">
+    
         var socket = io('http://localhost:3000');
         
-       function fillProduto(produto) {
-             $('.gambeta').append('<div class="card mb-3"><div class="card-body"><div class="row"><div class="col-12 col-sm-8 mb-3"><div class="valor "><div class="col">Valor: <span >'+ produto.valorProduto+'</span></div></div><div class="Nomeproduto "><div class="col"> <h4 >'+ produto.nomeProduto+'</h4></div></div> <div class = "descricao"><div>Descrição</div> <textarea class="form-control" >'+produto.descricao + '</textarea></div>               </div>  <div class="col-12 col-sm-4"><div class = "img"><img class="img-thumbnail"  src="'+produto.urlImagem+'" /></div></div>           </div></div></div>');
+        function fillProduto(produto) {
+                $('.gambeta').append('<div class="card mb-3"><div class="card-body"><div class="row"><div class="col-12 col-sm-8 mb-3"><div class="valor "><div class="col">Valor: <span >'+ produto.valorProduto+'</span></div></div><div class="Nomeproduto "><div class="col"> <h4 >'+ produto.nomeProduto+'</h4></div></div> <div class = "descricao"><div>Descrição</div> <textarea class="form-control" >'+produto.descricao + '</textarea></div>               </div>  <div class="col-12 col-sm-4"><div class = "img"><img class="img-thumbnail"  src="'+produto.urlImagem+'" /></div></div>           </div></div></div>');
 
             //$('.valor').append('<div class="valor "><div class="col">Valor: <span >'+ produto.valorProduto+'</span></div></div>');
             //$('.Nomeproduto').append('<div class="Nomeproduto "><div class="col"> <h4 >'+ produto.nomeProduto+'</h4></div></div>');
@@ -66,14 +69,13 @@
         
         socket.on('receivedProdutos', function(produto) {
             fillProduto(produto);
-           });
- 
+            });
+
         socket.on('previousprodutos', function(produtos) {
             for (produto of produtos){
                 fillProduto(produto);
             }
         });
-
 
     </script>
 

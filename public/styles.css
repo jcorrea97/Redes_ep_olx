@@ -48,3 +48,30 @@ button {
   padding: 20px;
   overflow-y: scroll;
 }
+
+#top-menu {
+  height: 10%;
+}
+
+.navbar.navbar-light {
+  display: block;
+  margin-top: -1.1%;
+  background-color: rgb(155, 155, 155);
+}
+
+#searchbar {
+  margin-left: 30%;
+  position: relative;
+}
+
+#searchinput {
+  width: 700px;
+}
+
+.form-inline .btn {
+  width: 10%;
+}
+
+.btn.newproduct {
+  margin-left: -100%;
+}
