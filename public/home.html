@@ -14,18 +14,7 @@
 
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-
-<style>
-    .logo-container {
-        background-color: #47bcff;
-        color: #FFF;
-    }
-    .logo {
-        font-family: 'Handlee', cursive;
-        font-size: 2.5rem;
-    }
-</style>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
 </head>
 <body>	
@@ -51,14 +40,14 @@
         </form>
     </nav>
 
-    <div class="gambeta"> </div>
+    <div class="gambeta"></div>
     
     <script type= "text/javascript">
     
         var socket = io('http://localhost:3000');
         
         function fillProduto(produto) {
-                $('.gambeta').append('<div class="card mb-3"><div class="card-body"><div class="row"><div class="col-12 col-sm-8 mb-3"><div class="valor "><div class="col">Valor: <span >'+ produto.valorProduto+'</span></div></div><div class="Nomeproduto "><div class="col"> <h4 >'+ produto.nomeProduto+'</h4></div></div> <div class = "descricao"><div>Descrição</div> <textarea class="form-control" >'+produto.descricao + '</textarea></div>               </div>  <div class="col-12 col-sm-4"><div class = "img"><img class="img-thumbnail"  src="'+produto.urlImagem+'" /></div></div>           </div></div></div>');
+                $('.gambeta').append('<div class="card mb-3"><div class="card-body"><div class="row"><div class="col-12 col-sm-8 mb-3"><div class="valor "><div class="col">Valor: <span >'+ produto.valorProduto+'</span></div></div><div class="Nomeproduto "><div class="col"> <a class="nome-produto-link" href="produto.html"> <h4 >'+ produto.nomeProduto+'</h4></a></div></div> <div class = "descricao"><div>Descrição</div> <textarea class="form-control" >'+produto.descricao + '</textarea></div>               </div>  <div class="col-12 col-sm-4"><div class = "img"><img class="img-thumbnail"  src="'+produto.urlImagem+'" /></div></div>           </div></div></div>');
 
             //$('.valor').append('<div class="valor "><div class="col">Valor: <span >'+ produto.valorProduto+'</span></div></div>');
             //$('.Nomeproduto').append('<div class="Nomeproduto "><div class="col"> <h4 >'+ produto.nomeProduto+'</h4></div></div>');

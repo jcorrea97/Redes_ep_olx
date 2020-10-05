@@ -8,6 +8,15 @@ html, body {
   box-sizing: border-box;
 }
 
+.logo-container {
+  background-color: #47bcff;
+  color: #FFF;
+}
+.logo {
+  font-family: 'Handlee', cursive;
+  font-size: 2.5rem;
+}
+
 #chat {
   margin: auto;
   padding: 20px;
@@ -74,4 +83,61 @@ button {
 
 .btn.newproduct {
   margin-left: -100%;
+}
+
+.product-name .display-4 {
+  margin: 30px 0px 35px 300px;
+  font-size: 2.1rem;
+}
+
+.product-img {
+  width: 600px;
+  margin-left: 300px;
+  position: relative;
+}
+
+.product-price {
+  font-size: 1.5rem;
+  margin: 30px 0px 35px 300px;
+}
+
+.product-details {
+  font-size: 1.2rem;
+  margin: 30px 0px 35px 280px;
+}
+
+.product-info{
+  display: flex;
+}
+
+.compra-info {
+  height: 30%;
+  width: 25%;
+  margin-left: 100px;
+  margin-top: 1.2%;
+}
+
+.compra-info .col {
+  margin-top: 90px;
+  margin-left: 10px;
+}
+
+.btn.chat {
+  width: 110px;
+  margin-left: 90px;
+}
+
+.btn.buy {
+  height: 70px;
+  width: 300px;
+}
+
+.nome-produto-link {
+  color: black;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.img-thumbnail {
+  max-width: 600px !important;
 }
