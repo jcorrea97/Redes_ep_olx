@@ -18,6 +18,8 @@
 
 </head>
 <body>	
+
+   <div id="primeirapagina">
     <div  class="jumbotron mb-0 mt-4">
         <h1 class="display-4" >OLX</h1>
     </div>
@@ -30,19 +32,111 @@
             <a class="nav-item nav-link" href="/#">Aprovado</a>
             <a class="nav-item nav-link" href="/#">Entregue</a>
         </div>
-        <a href="http://localhost:3000/novoproduto"><button class="btn btn-outline-secondary my-2 my-sm-0 newproduct">Novo produto</button></a>
-        <a href="http://localhost:3000/chat"><button class="btn btn-outline-secondary my-2 my-sm-0">chat</button></a>
+        <a ><button class="btn btn-outline-secondary my-2 my-sm-0 newproduct" onclick="abrirNovoProduto()" type="button">Novo produto</button></a>
+        <a ><button class="btn btn-outline-secondary my-2 my-sm-0" onclick="abrirchat()" type="button">chat</button></a>
     </nav>
     <nav class="navbar navbar-light">
         <form class="form-inline" id="searchbar">
             <input class="form-control mr-sm-2" id="searchinput" type="search" placeholder="Buscar produto" aria-label="Search">
-            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>
+            <button class="btn btn-outline-light my-2 my-sm-0"  type="button">Buscar</button>
         </form>
     </nav>
 
     <div class="gambeta"></div>
-    
+</div> 
+
+
+<div id="telachat" class="hidden">
+        <form id="chat">
+            <input type="text" name ="username" id="inputUserName" placeholder="Digite seu usuário"> 
+            <div class="messages"></div>
+            <input type="text" name ="message" placeholder="Digite sua mensagem">
+            <button type="submit">Enviar</button>
+        </form>
+</div>
+
+
+<div id="telanovoproduto" class="hidden">
+
+    <div  class="jumbotron mb-0 ">
+        <h1 class="display-4" >Insira um novo produto</h1>
+    </div>
+
+    <div class="container">
+
+        <div class="card mt-3">
+            <form id="sendnovoproduto" class="card-body"  >
+                <div class="form-group">
+                    <label for="nomeProduto">Produto</label>
+                    <input  name= "nomeProduto" class="form-control" placeholder="nome do produto"/>
+                    <small>Informa qual o nome do produto.</small>
+                    
+                </div>
+                <div class="form-group">
+                    <label for="urlProduto">Url</label>
+                    <input name= "urlProduto" class="form-control" placeholder="url do produto"/>
+                    <small>Procure em um site o produto que você deseja e cole a url da página aqui.</small>
+                    
+                </div>
+                <div class="form-group">
+                    <label for="urlImagem">Imagem</label>
+                    <input name= "urlImagem" class="form-control" placeholder="url da imagem"/>
+                    <small>Copie a url de uma boa imagem do produto e cole aqui para ajudar a conseguir compradores.</small>
+                
+                </div>
+                
+                <div class="form-group">
+                    <label for="valorProduto">Valor</label>
+                    <input name= "valorProduto" class="form-control" placeholder="100,00"/>
+                    <small>valor do produto</small>
+                
+                </div>
+                
+                <div class="form-group">
+                    <label for="descricao">Descrição</label>
+                    <textarea name="descricao" class="form-control" placeholder="Adicione detalhes importantes para ajudar o comprador."></textarea>
+                </div>
+                <a><button id = "botaocadastro" class="btn btn-primary" type="submit">Cadastrar</button></a>
+            </form>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
     <script type= "text/javascript">
+
+       //---------------------------------------tela home ---------------------------
+
+        function abrirchat() {
+            //hidden na tela menu
+            var primeirapagina = document.querySelector('#primeirapagina');
+            primeirapagina.classList.add('hidden');
+            //tira hidden ta tela chat
+            var telachat = document.querySelector('#telachat');
+            telachat.classList.remove('hidden');
+        }
+
+        function abrirNovoProduto() {
+            //hidden na tela menu
+            var primeirapagina = document.querySelector('#primeirapagina');
+            primeirapagina.classList.add('hidden');
+            //hidden ta tela chat
+            var telachat = document.querySelector('#telachat');
+            telachat.classList.add('hidden');
+            //remove hidden ta tela novoproduto
+            var telanovoproduto = document.querySelector('#telanovoproduto');
+            telanovoproduto.classList.remove('hidden');
+        }
     
         var socket = io('http://localhost:3000');
         
@@ -65,6 +159,87 @@
                 fillProduto(produto);
             }
         });
+
+
+        //---------------------------------------CHAT---------------------------
+
+        function renderMessage(message) {
+            $('.messages').append('<div class="message"><strong>'+ message.author+'</strong>: '+ message.message+' </div> ');
+        }
+
+        socket.on('previousMessages', function(messages) {
+            for (message of messages){
+                renderMessage(message);
+            }
+        });
+
+        socket.on('receivedMessage', function(message) {
+            renderMessage(message);
+        });
+
+        $('#chat').submit(function(event) {
+            event.preventDefault();
+            var author = $('input[name=username]').val();
+            var message = $('input[name=message]').val();
+
+            if (author.length && message.length) {
+                var messageObject = {
+                    author: author,
+                    message: message
+                };
+            } 
+
+            renderMessage(messageObject);
+
+            socket.emit('sendMessage', messageObject );
+            $('input[name=message').val('');
+            document.getElementById("inputUserName").disabled = true;
+        })
+
+
+        //---------------------------------------Criar produto---------------------------
+
+        
+
+        $('#sendnovoproduto').submit(function(event) {
+                event.preventDefault();
+                var nomeProduto= $('input[name=nomeProduto]').val();
+                var urlProduto = $('input[name=urlProduto]').val();
+                var urlImagem = $('input[name=urlImagem]').val();
+                var valorProduto = $('input[name=valorProduto]').val();
+                var descricao = $('textarea[name=descricao]').val();
+    
+                    var produtoObject = {
+                        nomeProduto: nomeProduto,
+                        urlProduto: urlProduto,
+                        urlImagem: urlImagem,
+                        valorProduto: valorProduto,
+                        descricao: descricao
+                    };
+    
+                if(!nomeProduto.length){
+                    alert("insira um produto valido");
+                } else {
+                    alert("produto cadastrado");
+                    var primeirapagina = document.querySelector('#primeirapagina');
+                    primeirapagina.classList.remove('hidden');
+                    socket.emit('sendProduto', produtoObject );
+                    goToHome();
+                }
+    
+            });
+
+            function goToHome(produto) {
+            //hidden ta tela novoproduto
+            var telanovoproduto = document.querySelector('#telanovoproduto');
+            telanovoproduto.classList.add('hidden');
+            //hidden ta tela chat
+            var telachat = document.querySelector('#telachat');
+            telachat.classList.add('hidden');            
+            //remove hidden ta tela menu
+            var primeirapagina = document.querySelector('#primeirapagina');
+            primeirapagina.classList.remove('hidden');
+        }
 
     </script>
 
