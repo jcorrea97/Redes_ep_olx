@@ -141,3 +141,7 @@ button {
 .img-thumbnail {
   max-width: 600px !important;
 }
+
+.hidden {
+  display: none;
+}
