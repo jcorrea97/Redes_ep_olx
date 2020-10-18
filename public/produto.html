@@ -13,6 +13,7 @@
 
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -48,7 +49,7 @@
                 </div>  
                 <div class="col-12 product-info">
                     <div class="product-img">
-                        <img class="img-thumbnail"  src="https://lh3.googleusercontent.com/proxy/VuGID_MZuprZ-QUAozOh3uMt8FAtJw0aEf-LmI2MAYR2iVJprQOxMSTB_Bk91yM58rkPijIHA-QclwbWI6cufpxwXdwUfvz6skVvVPWMP0ly4XLRw4X-_YI-V168p-wJqTBbS2YIDRns7zyLDrOOTB9CEddL05U" />
+                        <img class="img-thumbnail"  src="https://blog.weddingbrasil.com.br/wp-content/uploads/2015/07/David-Beckstead-7.jpg" />
                     </div>
                     <div class="compra-info">
                         <button class="btn btn-success btn-lg my-2 my-sm-0 buy">Comprar</button>
@@ -74,7 +75,104 @@
                     </div>            
                 </div>
             </div>
+            <div class="line-break"></div>
+            <div class="row">
+                <div class="col-12 col-sm-8 mb-3">
+                    <div class="avaliacao-vendedor">
+                        <span class="heading">Avaliação do Vendedor</span>
+                        <div></div>
+                        <span class="media-avaliacoes">-</span>
+                        <a>média baseada em</a>
+                        <span class="total-avaliacoes">-</span>
+                        <a>reviews.</a>
+                        <hr style="border:3px solid #f1f1f1">
+
+                        <div class="row">
+                            <div class="side">
+                                <div>5 star</div>
+                            </div>
+                        <div class="middle">
+                            <div class="bar-container">
+                                <div class="bar-5"></div>
+                            </div>
+                        </div>
+                        <div class="side right">
+                            <span class="5-star-rating">10</span>
+                        </div>
+                        <div class="side">
+                            <div>4 star</div>
+                        </div>
+                        <div class="middle">
+                            <div class="bar-container">
+                            <div class="bar-4"></div>
+                            </div>
+                        </div>
+                        <div class="side right">
+                            <span class="4-star-rating">8</span>
+                        </div>
+                        <div class="side">
+                            <div>3 star</div>
+                        </div>
+                        <div class="middle">
+                            <div class="bar-container">
+                            <div class="bar-3"></div>
+                            </div>
+                        </div>
+                        <div class="side right">
+                            <span class="3-star-rating">2</span>
+                        </div>
+                        <div class="side">
+                            <div>2 star</div>
+                        </div>
+                        <div class="middle">
+                            <div class="bar-container">
+                            <div class="bar-2"></div>
+                            </div>
+                        </div>
+                        <div class="side right">
+                            <span class="2-star-rating">4</span>
+                        </div>
+                        <div class="side">
+                            <div>1 star</div>
+                        </div>
+                        <div class="middle">
+                            <div class="bar-container">
+                            <div class="bar-1"></div>
+                            </div>
+                        </div>
+                        <div class="side right">
+                            <span class="1-star-rating">1</span>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script type= "text/javascript">
+        function atualizaReviews(qtd5stars, qtd4stars, qtd3stars, qtd2stars, qtd1star){
+            var total = qtd5stars + qtd4stars + qtd3stars + qtd2stars + qtd1star;
+            $(".total-avaliacoes").text(total);
+
+            if(total==0) total=1;
+
+            var media = ((5*qtd5stars) + (4*qtd4stars) + (3*qtd3stars) + (2*qtd2stars) + (1*qtd1star))/total;
+            $(".media-avaliacoes").text(media.toFixed(1));
+
+            $(".bar-5").css("width", (qtd5stars*100)/total + "%");
+            $(".5-star-rating").text(qtd5stars);
+            $(".bar-4").css("width", (qtd4stars*100)/total + "%");
+            $(".4-star-rating").text(qtd4stars);
+            $(".bar-3").css("width", (qtd3stars*100)/total + "%");
+            $(".3-star-rating").text(qtd3stars);
+            $(".bar-2").css("width", (qtd2stars*100)/total + "%");
+            $(".2-star-rating").text(qtd2stars);
+            $(".bar-1").css("width", (qtd1star*100)/total + "%");
+            $(".1-star-rating").text(qtd1star);
+        }
+
+        atualizaReviews(5,8,2,1,6);
+    </script>
 </body>
 </html>
