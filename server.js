@@ -52,7 +52,7 @@ io.on('connection', socket =>{
     });
 
     socket.on('comprarproduto', data => {
-        socket.broadcast.emit('receivedProdutos', produtos);
+        produtos.pop(data);        
     });
 
 
