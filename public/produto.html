@@ -151,6 +151,24 @@
     </div>
 
     <script type= "text/javascript">
+        function atualizaInfos(){
+            var queryString = decodeURIComponent(window.location.search);
+            var info = [];
+            queryString = queryString.replace(/\+/g, ' ');
+            queryString = queryString.substring(1);
+            var queries = queryString.split("&");
+
+            for (var i = 0; i < queries.length; i++){
+                var aux = queries[i].split("=")[1];
+                info.push(aux);
+            }
+
+            $(".product-name h4").text(info[0]);
+            $(".product-details span").text(info[1]);
+            $(".product-price span").text("R$" + parseFloat(info[2]).toFixed(2));
+            $(".product-img img").attr("src",info[3]);
+        }
+    
         function atualizaReviews(qtd5stars, qtd4stars, qtd3stars, qtd2stars, qtd1star){
             var total = qtd5stars + qtd4stars + qtd3stars + qtd2stars + qtd1star;
             $(".total-avaliacoes").text(total);
@@ -171,8 +189,9 @@
             $(".bar-1").css("width", (qtd1star*100)/total + "%");
             $(".1-star-rating").text(qtd1star);
         }
-
+        atualizaInfos();
         atualizaReviews(5,8,2,1,6);
+
     </script>
 </body>
 </html>
