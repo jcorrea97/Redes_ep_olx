@@ -51,10 +51,14 @@ io.on('connection', socket =>{
         socket.emit('usuarioNovo', data);
     });
 
+    socket.on('comprarproduto', data => {
+        socket.broadcast.emit('receivedProdutos', produtos);
+    });
+
 
     socket.on('sendMessage', data => {
         messages.push(data);
-        socket.emit('receivedMessage', data);
+        socket.broadcast.emit('receivedMessage', data);
     });
 
     socket.on('sendProduto', data => {

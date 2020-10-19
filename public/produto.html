@@ -52,7 +52,7 @@
                         <img class="img-thumbnail"  src="https://blog.weddingbrasil.com.br/wp-content/uploads/2015/07/David-Beckstead-7.jpg" />
                     </div>
                     <div class="compra-info">
-                        <button class="btn btn-success btn-lg my-2 my-sm-0 buy">Comprar</button>
+                        <button onclick="comprar()" class="btn btn-success btn-lg my-2 my-sm-0 buy">Comprar</button>
                         <div class="col">
                             <p>Alguma dúvida sobre o produto?</p> 
                             <p>Fale com o vendedor pelo nosso chat</p> 
@@ -89,7 +89,9 @@
 
                         <div class="row">
                             <div class="side">
-                                <div>5 star</div>
+                                <div class="btn-group" role="group" aria-label="Third group">
+                                    <button onclick="votar(5)" type="button" class="btn btn-success">5</button>
+                                  </div>
                             </div>
                         <div class="middle">
                             <div class="bar-container">
@@ -97,10 +99,12 @@
                             </div>
                         </div>
                         <div class="side right">
-                            <span class="5-star-rating">10</span>
+                            <span class="5-star-rating">0</span>
                         </div>
                         <div class="side">
-                            <div>4 star</div>
+                            <div class="btn-group" role="group" aria-label="Third group">
+                                <button onclick="votar(4)" type="button" class="btn btn-primary">4</button>
+                              </div>
                         </div>
                         <div class="middle">
                             <div class="bar-container">
@@ -108,10 +112,12 @@
                             </div>
                         </div>
                         <div class="side right">
-                            <span class="4-star-rating">8</span>
+                            <span class="4-star-rating">0</span>
                         </div>
                         <div class="side">
-                            <div>3 star</div>
+                            <div class="btn-group" role="group" aria-label="Third group">
+                                <button onclick="votar(3)" type="button" class="btn btn-info">3</button>
+                              </div>
                         </div>
                         <div class="middle">
                             <div class="bar-container">
@@ -119,10 +125,12 @@
                             </div>
                         </div>
                         <div class="side right">
-                            <span class="3-star-rating">2</span>
+                            <span class="3-star-rating">0</span>
                         </div>
                         <div class="side">
-                            <div>2 star</div>
+                            <div class="btn-group" role="group" aria-label="Third group">
+                                <button onclick="votar(2)" type="button" class="btn btn-warning">2</button>
+                              </div>
                         </div>
                         <div class="middle">
                             <div class="bar-container">
@@ -130,10 +138,12 @@
                             </div>
                         </div>
                         <div class="side right">
-                            <span class="2-star-rating">4</span>
+                            <span class="2-star-rating">0</span>
                         </div>
                         <div class="side">
-                            <div>1 star</div>
+                            <div class="btn-group" role="group" aria-label="Third group">
+                                <button onclick="votar(1)" type="button" class="btn btn-danger">1</button>
+                              </div>
                         </div>
                         <div class="middle">
                             <div class="bar-container">
@@ -141,7 +151,7 @@
                             </div>
                         </div>
                         <div class="side right">
-                            <span class="1-star-rating">1</span>
+                            <span class="1-star-rating">0</span>
                         </div>
                         </div>
                     </div>
@@ -151,6 +161,9 @@
     </div>
 
     <script type= "text/javascript">
+        var socket = io('http://localhost:3000');
+        var nomeProduto;
+
         function atualizaInfos(){
             var queryString = decodeURIComponent(window.location.search);
             var info = [];
@@ -164,6 +177,7 @@
             }
 
             $(".product-name h4").text(info[0]);
+            nomeProduto = info[0];
             $(".product-details span").text(info[1]);
             $(".product-price span").text("R$" + parseFloat(info[2]).toFixed(2));
             $(".product-img img").attr("src",info[3]);
@@ -189,8 +203,36 @@
             $(".bar-1").css("width", (qtd1star*100)/total + "%");
             $(".1-star-rating").text(qtd1star);
         }
+
+        function votar(voto) {
+            switch(voto) {
+                    case 5:
+                    atualizaReviews(1,0,0,0,0);
+                    break;
+                    case 4:
+                    atualizaReviews(0,1,0,0,0);
+                    break;
+                    case 3:
+                    atualizaReviews(0,0,1,0,0);
+                    break;
+                    case 2:
+                    atualizaReviews(0,0,0,1,0);
+                    break;
+                    default:
+                    atualizaReviews(0,0,0,0,1);
+                    break;
+            }
+        }
         atualizaInfos();
-        atualizaReviews(5,8,2,1,6);
+
+        function comprar() {
+            alert("produto comprado!!!")
+            socket.emit('comprarproduto', nomeProduto);
+        }
+
+
+        
+        //atualizaReviews(5,8,2,1,6);
 
     </script>
 </body>
