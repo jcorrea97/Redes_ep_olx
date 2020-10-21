@@ -23,7 +23,11 @@
     </form>
 
     <script type= "text/javascript">
-        var socket = io('http://localhost:3000');
+        var socket = io('http://localhost:3000', {
+            query: {
+                token: getCookie('token')
+            }
+        });
 
         function renderMessage(message) {
             $('.messages').append('<div class="message"><strong>'+ message.author+'</strong>: '+ message.message+' </div> ');
@@ -38,6 +42,12 @@
         socket.on('receivedMessage', function(message) {
             renderMessage(message);
         });
+
+        socket.on('recebeAvaliacao', (data) => {
+            console.log(data)
+            alert('recebeu um voto: ' + JSON.stringify(data));
+        })
+
 
         $('#chat').submit(function(event) {
             event.preventDefault();

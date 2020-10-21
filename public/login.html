@@ -34,25 +34,29 @@
             </div>
         </div>
     </div>
+    
+    <script src="./cookies.js"></script>
 
     <script type= "text/javascript">
         var socket = io('http://localhost:3000');
 
+        socket.on('usuarioNovo', function (user) {
+            nomeUsuario = user;
+            setCookie("token", user.id)
+            console.log("usuário logado:", user)
+            goToHome();
+        });
 
         $('#telaLogin').submit(function(event) {
             event.preventDefault();
             var nameusuario= $('input[name=nameusuario]').val();
 
-                var userObject = {
-                    user: nameusuario
-                };
+               
 
             if(!nameusuario.length){
                 alert("insira um nome valido");
             } else {
-                console.log(userObject);
-                socket.emit('initUser', userObject );
-                goToHome();
+                socket.emit('initUser', {name: nameusuario} );
             }
 
         });

@@ -90,7 +90,7 @@
                         <div class="row">
                             <div class="side">
                                 <div class="btn-group" role="group" aria-label="Third group">
-                                    <button onclick="votar(5)" type="button" class="btn btn-success">5</button>
+                                    <button onclick="avaliaUsuario(5)" type="button" class="btn btn-success">5</button>
                                   </div>
                             </div>
                         <div class="middle">
@@ -103,7 +103,7 @@
                         </div>
                         <div class="side">
                             <div class="btn-group" role="group" aria-label="Third group">
-                                <button onclick="votar(4)" type="button" class="btn btn-primary">4</button>
+                                <button onclick="avaliaUsuario(4)" type="button" class="btn btn-primary">4</button>
                               </div>
                         </div>
                         <div class="middle">
@@ -116,7 +116,7 @@
                         </div>
                         <div class="side">
                             <div class="btn-group" role="group" aria-label="Third group">
-                                <button onclick="votar(3)" type="button" class="btn btn-info">3</button>
+                                <button onclick="avaliaUsuario(3)" type="button" class="btn btn-info">3</button>
                               </div>
                         </div>
                         <div class="middle">
@@ -129,7 +129,7 @@
                         </div>
                         <div class="side">
                             <div class="btn-group" role="group" aria-label="Third group">
-                                <button onclick="votar(2)" type="button" class="btn btn-warning">2</button>
+                                <button onclick="avaliaUsuario(2)" type="button" class="btn btn-warning">2</button>
                               </div>
                         </div>
                         <div class="middle">
@@ -142,7 +142,7 @@
                         </div>
                         <div class="side">
                             <div class="btn-group" role="group" aria-label="Third group">
-                                <button onclick="votar(1)" type="button" class="btn btn-danger">1</button>
+                                <button onclick="avaliaUsuario(1)" type="button" class="btn btn-danger">1</button>
                               </div>
                         </div>
                         <div class="middle">
@@ -160,9 +160,60 @@
         </div>
     </div>
 
-    <script type= "text/javascript">
-        var socket = io('http://localhost:3000');
+    
+    <script src="./cookies.js"></script>
+
+    <script type= "text/javascript">     
+
+     var socket = io('http://localhost:3000', {
+        query: {
+            token: getCookie('token')
+        }
+      });
+
+      socket.on('recebeAvaliacao', (data) => {
+            console.log(data)
+            alert('recebeu um voto: ' + JSON.stringify(data));
+        })
+
+
         var nomeProduto;
+
+        let donoProdutoId;
+
+        function avaliaUsuario(estrelas) {
+
+            switch(estrelas) {
+                case 0:
+                enviaAvalicao(0)
+                break;
+                case 1:
+                enviaAvalicao(1)
+                break;
+                case 2:
+                enviaAvalicao(2)
+                break;
+                case 3:
+                enviaAvalicao(3)
+                break;
+                case 4:
+                enviaAvalicao(4)
+                break;
+                case 5:
+                enviaAvalicao(5)
+                break;
+
+            }
+        }
+
+        function enviaAvalicao(rate) {
+            alert('avaliando usuario: ' + donoProdutoId)
+            socket.emit('avaliaUsuario', {
+                token: getCookie('token'),
+                rate,
+                userRatedId: donoProdutoId
+            })
+        }
 
         function atualizaInfos(){
             var queryString = decodeURIComponent(window.location.search);
@@ -181,6 +232,7 @@
             $(".product-details span").text(info[1]);
             $(".product-price span").text("R$" + parseFloat(info[2]).toFixed(2));
             $(".product-img img").attr("src",info[3]);
+            donoProdutoId = info[4]
         }
     
         function atualizaReviews(qtd5stars, qtd4stars, qtd3stars, qtd2stars, qtd1star){
