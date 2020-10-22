@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>olx</title>
+    <title>OLX</title>
 
     <script> src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"</script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
@@ -18,7 +18,11 @@
 </head>
 <body>
     <div  class="jumbotron mb-0 mt-4">
-        <h1 class="display-4" >OLX</h1>
+        <h1 class="display-4">
+            <a href="http://localhost:3000/home" class="title">
+                OLX
+            </a>
+        </h1>
     </div>
 
     <div class="container"> </div>
@@ -174,8 +178,8 @@
       socket.on('recebeAvaliacao', (data) => {
             console.log(data)
             alert('recebeu um voto: ' + JSON.stringify(data));
+            atualizaReviews(data["5 estrelas"],data["4 estrelas"],data["3 estrelas"],data["2 estrelas"],data["1 estrelas"]);
         })
-
 
         var nomeProduto;
 
@@ -229,6 +233,7 @@
 
             $(".product-name h4").text(info[0]);
             nomeProduto = info[0];
+            document.title = nomeProduto;
             $(".product-details span").text(info[1]);
             $(".product-price span").text("R$" + parseFloat(info[2]).toFixed(2));
             $(".product-img img").attr("src",info[3]);
