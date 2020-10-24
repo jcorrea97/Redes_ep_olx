@@ -175,6 +175,7 @@
         }
       });
 
+      //socket recebe avaliação
       socket.on('recebeAvaliacao', (data) => {
             console.log(data)
             alert('recebeu um voto: ' + JSON.stringify(data));
@@ -184,7 +185,7 @@
         var nomeProduto;
 
         let donoProdutoId;
-
+        //metodo para avaliar usuario
         function avaliaUsuario(estrelas) {
 
             switch(estrelas) {
@@ -210,6 +211,7 @@
             }
         }
 
+        //socket de emissão de avaliação
         function enviaAvalicao(rate) {
             alert('avaliando usuario: ' + donoProdutoId)
             socket.emit('avaliaUsuario', {
@@ -281,7 +283,7 @@
             }
         }
         atualizaInfos();
-
+        //socket que emite que o item foi comprado e retira da lista de produtos
         function comprar() {
             alert("produto comprado!!!")
             socket.emit('comprarproduto', nomeProduto);

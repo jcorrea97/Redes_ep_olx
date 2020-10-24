@@ -84,6 +84,8 @@
                 alert('recebeu um voto: ' + JSON.stringify(data));
             })
 
+            //metodo que cria um novo produto
+            // pega os valores dos campos e envia um objeto produto para o socket com chave 'sendProduto'
             $('#sendnovoproduto').submit(function (event) {
                 event.preventDefault();
                 var nomeProduto = $('input[name=nomeProduto]').val();

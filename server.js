@@ -17,24 +17,24 @@ app.set('view engine', 'html');
 app.use(cookieParser("1234"));
 app.use(bodyParser.json())
 
-
+//tela home
 app.get('/home', (req, res) => {
     res.render('home.html');
 });
-
+//tela login
 app.get('/', (req, res) => {
     res.render('login.html');
 });
 
-
+//tela chat
 app.get('/chat', (req, res) => {
     res.render('salachat.html');
 });
-
+//tela para criar produto
 app.get('/novoproduto', (req, res) => {
     res.render('novoproduto.html');
 });
-
+//tela login
 app.post('/login', (req, res) => {
     const { name } = req.body
    
@@ -46,6 +46,7 @@ app.all("/**", (req, res) => {
     res.render('notFound.html')
 })
 
+//lista de msg, produtos e usuarios
 let messages = [];
 
 let produtos = [];
@@ -73,25 +74,29 @@ io.on('connection', socket =>{
     socket.emit('previousprodutos', produtos );
     socket.emit('usuario', user);
 
+    //socket pque recebe um novo usuario
     socket.on('initUser', data => {
         const user = userService.login(data.name, socket.id, data.token)
         socket.emit('usuarioNovo', user);
     });
 
+    //socket que recebe que o item foi comprado e apaga da lista
     socket.on('comprarproduto', data => {
         produtos.pop(data);        
     });
 
+    //socket que recebe msangem, adiciona msg em uma lista e emite a msg na salaChat
     socket.on('sendMessage', data => {
         messages.push(data);
         socket.broadcast.emit('receivedMessage', data);
     });
-
+    //socket que recebe um produto e coloca ele na lista de produtos e emit para todos conectados um novo produto
     socket.on('sendProduto', data => {
         produtos.push(data);
         socket.broadcast.emit('receivedProdutos', data);
     });
 
+    //socket de avaliacao do usuario
     socket.on('avaliaUsuario', data => {
         userService.rateUser(data.token, data.rate, data.userRatedId)
         userRated = userService.getUser(data.userRatedId);

@@ -25,16 +25,18 @@
     <script type= "text/javascript">
         var socket = io('http://localhost:3000');
 
+        //metodo chamado apos receber msm e coloca a msg na tela
         function renderMessage(message) {
             $('.messages').append('<div class="message"><strong>'+ message.author+'</strong>: '+ message.message+' </div> ');
         }
-
+        //socket para manter as msg apos um refresh na tela
         socket.on('previousMessages', function(messages) {
             for (message of messages){
                 renderMessage(message);
             }
         });
 
+        //socket que recebe msg e chama metodo que coloca a msg na tela
         socket.on('receivedMessage', function(message) {
             renderMessage(message);
         });
@@ -44,7 +46,7 @@
             alert('recebeu um voto: ' + JSON.stringify(data));
         })
 
-
+        //metodo para submeter mensagem no chat via socket emit com chave "sendMessage"
         $('#chat').submit(function(event) {
             event.preventDefault();
             var author = $('input[name=username]').val();
