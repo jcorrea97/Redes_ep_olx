@@ -82,6 +82,7 @@
             <div class="line-break"></div>
             <div class="row">
                 <div class="col-12 col-sm-8 mb-3">
+                    <!--Referencia: https://www.w3schools.com/howto/howto_css_user_rating.asp-->
                     <div class="avaliacao-vendedor">
                         <span class="heading">Avaliação do Vendedor</span>
                         <div></div>
@@ -211,7 +212,7 @@
             }
         }
 
-        //socket de emissão de avaliação
+        //socket de emissão de avaliação quando é o usuário é avaliado na página
         function enviaAvalicao(rate) {
             alert('avaliando usuario: ' + donoProdutoId)
             socket.emit('avaliaUsuario', {
@@ -221,6 +222,7 @@
             })
         }
 
+        //Funcao que altera a pagina do padrao do produto com suas proprias infos
         function atualizaInfos(){
             var queryString = decodeURIComponent(window.location.search);
             var info = [];
@@ -237,11 +239,12 @@
             nomeProduto = info[0];
             document.title = nomeProduto;
             $(".product-details span").text(info[1]);
-            $(".product-price span").text("R$" + parseFloat(info[2]).toFixed(2));
+            $(".product-price span").text("R$" + info[2].replace(',','.'));
             $(".product-img img").attr("src",info[3]);
             donoProdutoId = info[4]
         }
-    
+        
+        //Funcao que atualiza vizualmente a avaliação do vendedor na pagina do produto
         function atualizaReviews(qtd5stars, qtd4stars, qtd3stars, qtd2stars, qtd1star){
             var total = qtd5stars + qtd4stars + qtd3stars + qtd2stars + qtd1star;
             $(".total-avaliacoes").text(total);

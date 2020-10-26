@@ -40,7 +40,7 @@
     <script type= "text/javascript">
         var socket = io('http://localhost:3000');
 
-        //socket recebe usuario 
+        //socket recebe usuario, setando id
         socket.on('usuarioNovo', function (user) {
             nomeUsuario = user;
             setCookie("token", user.id)

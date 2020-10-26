@@ -97,7 +97,7 @@
             var queryString = "?nome=" + produto.nomeProduto + "&descricao=" + produto.descricao + "&valor=" + produto.valorProduto + "&img=" + produto.urlImagem + "&donoId=" + produto.donoId;
             queryString = queryString.replace(/ /g, "+");
 
-            $('.gambeta').append('<div class="card mb-3"><div class="card-body"><div class="row"><div class="col-12 col-sm-8 mb-3"><div class="valor "><div class="col">Valor: <span >' + produto.valorProduto + '</span></div></div><div class="Nomeproduto "><div class="col"> <a class="nome-produto-link" href=produto.html' + queryString + '> <h4 >' + produto.nomeProduto + '</h4></a></div></div> <div class = "descricao"><div>Descrição</div> <textarea class="form-control" >' + produto.descricao + '</textarea></div>               </div>  <div class="col-12 col-sm-4"><div class = "img"><img class="img-thumbnail"  src="' + produto.urlImagem + '" /></div></div>           </div></div></div>');
+            $('.gambeta').append('<div class="card mb-3"><div class="card-body"><div class="row"><div class="col-12 col-sm-8 mb-3"><div class="valor "><div class="col">Valor: <span >' + produto.valorProduto + '</span></div></div><div class="Nomeproduto "><div class="col"> <a class="nome-produto-link" href=produto.html' + queryString + '> <h4 >' + produto.nomeProduto + '</h4></a></div></div> <div class = "descricao"><div>Descrição</div> <br/><span>' + produto.descricao + '</span></div>               </div>  <div class="col-12 col-sm-4"><div class = "img"><img class="img-thumbnail"  src="' + produto.urlImagem + '" /></div></div>           </div></div></div>');
 
         }
         var nomeUsuario;

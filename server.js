@@ -96,7 +96,8 @@ io.on('connection', socket =>{
         socket.broadcast.emit('receivedProdutos', data);
     });
 
-    //socket de avaliacao do usuario
+    //socket de avaliacao do usuario recebido da pagina produto
+    //Chama a função que avalia o usuario na sua classe e emite o sinal de recebimento dessa avaliação
     socket.on('avaliaUsuario', data => {
         userService.rateUser(data.token, data.rate, data.userRatedId)
         userRated = userService.getUser(data.userRatedId);

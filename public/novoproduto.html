@@ -73,12 +73,15 @@
         <script src="./cookies.js"></script>
 
         <script type="text/javascript">
+            
+            //Instancia o socket com o token do usuário
             var socket = io('http://localhost:3000', {
                 query: {
                     token: getCookie('token')
                 }
             });
 
+            //Socket é acionado quando o usuário recebe uma avaliação e solta alerta que o mesmo recebeu um voto
             socket.on('recebeAvaliacao', (data) => {
                 console.log(data)
                 alert('recebeu um voto: ' + JSON.stringify(data));

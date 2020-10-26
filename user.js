@@ -21,6 +21,7 @@ class User {
         this.ratings[rate + ' estrelas']++;
     }
 
+    //Id gerado automaticamente
     static generateId() {
         return Math.floor(Math.random() * 1000000000)
     }
@@ -33,6 +34,8 @@ class UserService {
 
     constructor() {}
 
+    //Mantem os cookies do usuario armazenados, através do id.
+    //Se nao houver nome, nada é retornado
     login(name, socketId, token) {
 
         if(token && this.users[token]) {
@@ -60,6 +63,7 @@ class UserService {
         return this.users[id] || null
     }
 
+    //Chama a funcao de avaliacao na classe User
     rateUser(userRatingId, rate, userRatedId) {
         if(this.users[userRatedId])
         this.users[userRatedId].addRating(rate, userRatingId);
